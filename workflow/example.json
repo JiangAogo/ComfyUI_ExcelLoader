@@ -1,0 +1,165 @@
+{
+  "id": "3c14f953-46aa-4b88-a84f-ac8c79fbfe2c",
+  "revision": 0,
+  "last_node_id": 16,
+  "last_link_id": 16,
+  "nodes": [
+    {
+      "id": 14,
+      "type": "QC.LoadExcelContent",
+      "pos": [
+        1135.4761962890625,
+        3153.517822265625
+      ],
+      "size": [
+        400,
+        276
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "current_row_str",
+          "type": "STRING",
+          "links": [
+            15
+          ]
+        },
+        {
+          "name": "output_text",
+          "type": "STRING",
+          "links": [
+            16
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "QC.LoadExcelContent"
+      },
+      "widgets_values": [
+        "put your excel path here",
+        "A",
+        1,
+        1,
+        "increment",
+        -1,
+        "",
+        "0"
+      ]
+    },
+    {
+      "id": 15,
+      "type": "ShowText|pysssss",
+      "pos": [
+        1596.9981689453125,
+        3157.74365234375
+      ],
+      "size": [
+        315,
+        58
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 15
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ShowText|pysssss"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 16,
+      "type": "ShowText|pysssss",
+      "pos": [
+        1603.1683349609375,
+        3278.608642578125
+      ],
+      "size": [
+        306.2222900390625,
+        58.585182189941406
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 16
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ShowText|pysssss"
+      },
+      "widgets_values": [
+        ""
+      ]
+    }
+  ],
+  "links": [
+    [
+      15,
+      14,
+      0,
+      15,
+      0,
+      "STRING"
+    ],
+    [
+      16,
+      14,
+      1,
+      16,
+      0,
+      "STRING"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 1.5535220464768975,
+      "offset": [
+        -753.6106649243263,
+        -2696.3447838568313
+      ]
+    },
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}
