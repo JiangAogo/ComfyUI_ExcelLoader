@@ -1,6 +1,6 @@
 # ComfyUI-QC.ExcelLoader
 
-🚀这是一个批量读取excel中内容的节点，用于按顺序从指定的 Excel 文件列中读取内容，适用于批量测试。
+🚀这是一个可以在ComfyUI中批量读取excel中内容的节点，用于按顺序从指定的 Excel 文件列中读取内容，适用于批量测试。
 
 ## 使用说明
 
@@ -20,8 +20,8 @@
 **输出 (Outputs):**
 
 *   `current_row_str`: 本次节点执行时，实际*开始读取*的那一行的行号（以字符串形式输出）。
-*   `output_text`: 从 Excel 中读取到的、经过 `exclude_text` 处理后的单元格内容。如果 `read_count` 大于 1，多个单元格的内容会用换行符 (`\n`) 连接成一个单一的字符串。
+*   `output_text`: 从 Excel 中读取到的、经过 `exclude_text` 处理后的单元格内容。如果 `read_count` 大于 1，多个单元格的内容会用换行符连接成一个单一的字符串。
 
 **节点示例 (Node):**
-![描述](images/文件名.png)
+![node example](images/example.png)
 
