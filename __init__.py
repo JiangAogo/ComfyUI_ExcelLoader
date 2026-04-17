@@ -1,11 +1,35 @@
-# __init__.py
-# This file makes the directory a Python package.
-# ComfyUI looks for NODE_CLASS_MAPPINGS and NODE_DISPLAY_NAME_MAPPINGS here.
+# from .excel_loader_node import NODE_CLASS_MAPPINGS as EXCEL_MAPPINGS, NODE_DISPLAY_NAME_MAPPINGS as EXCEL_DISPLAY_MAPPINGS
+# from .url_image_loader_node import NODE_CLASS_MAPPINGS as URL_MAPPINGS, NODE_DISPLAY_NAME_MAPPINGS as URL_DISPLAY_MAPPINGS
 
-# Import the node classes and mappings from your node file(s)
-from .excel_loader_node import NODE_CLASS_MAPPINGS, NODE_DISPLAY_NAME_MAPPINGS
+# NODE_CLASS_MAPPINGS = {**EXCEL_MAPPINGS, **URL_MAPPINGS}
+# NODE_DISPLAY_NAME_MAPPINGS = {**EXCEL_DISPLAY_MAPPINGS, **URL_DISPLAY_MAPPINGS}
+
+# __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']
+
+# print("--- Loading Custom Nodes: ComfyUI_ExcelLoader ---")
+
+# new__init__.py
+from .excel_loader_node import NODE_CLASS_MAPPINGS as EXCEL_MAPPINGS, NODE_DISPLAY_NAME_MAPPINGS as EXCEL_DISPLAY_MAPPINGS
+from .url_image_loader_node import NODE_CLASS_MAPPINGS as URL_MAPPINGS, NODE_DISPLAY_NAME_MAPPINGS as URL_DISPLAY_MAPPINGS
+from .excel_logger import NODE_CLASS_MAPPINGS as LOGGER_MAPPINGS, NODE_DISPLAY_NAME_MAPPINGS as LOGGER_DISPLAY_MAPPINGS
+
+# Combine all mappings
+NODE_CLASS_MAPPINGS = {
+    **EXCEL_MAPPINGS, 
+    **URL_MAPPINGS,
+    **LOGGER_MAPPINGS
+}
+
+NODE_DISPLAY_NAME_MAPPINGS = {
+    **EXCEL_DISPLAY_MAPPINGS, 
+    **URL_DISPLAY_MAPPINGS,
+    **LOGGER_DISPLAY_MAPPINGS
+}
 
 # Export them so ComfyUI can find them
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']
 
 print("--- Loading Custom Nodes: ComfyUI_ExcelLoader ---")
+print(f"    ✓ Loaded {len(NODE_CLASS_MAPPINGS)} nodes:")
+for node_name in NODE_CLASS_MAPPINGS.keys():
+    print(f"      - {node_name}")

@@ -42,8 +42,8 @@ class LoadExcelContentAdvanced:
                 "column_letter": ("STRING", {"multiline": False, "default": "A", "description": "要读取的列字母，支持多列，用逗号分隔 (例如 'A', 'B,C', 'A,C,E')"}),
                 "tidy_tags": (["yes", "no"], {"default": "yes", "description": "是否将多列内容用逗号连接（适合Tags）。'no'则用空格连接。"}),
                 "read_count": ("INT", {"default": 1, "min": 1, "step": 1, "description": "每次执行读取的行数"}),
-                "start_row_number": ("INT", {"default": 1, "min": 1, "step": 1, "control_after_generate": True, "description": "从哪一行开始读取（1基索引）。运行后自动增加。"}),
-                "end_row_number": ("INT", {"default": -1, "min": -1, "step": 1, "description": "在哪一行停止读取（包含该行，1基索引）。-1 表示读到最后一行。"}),
+                "start_row_number": ("INT", {"default": 1, "min": 1, "max": 10000, "step": 1, "control_after_generate": True, "description": "从哪一行开始读取（1基索引）。运行后自动增加。"}),
+                "end_row_number": ("INT", {"default": -1, "min": -1, "max": 10000, "step": 1, "description": "在哪一行停止读取（包含该行，1基索引）。-1 表示读到最后一行。"}),
                 "exclude_text": ("STRING", {"multiline": True, "default": "", "description": "要从输出中排除的文本内容（区分大小写，每行一个）"})
             },
             "optional": {
