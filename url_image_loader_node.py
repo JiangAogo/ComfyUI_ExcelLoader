@@ -106,6 +106,8 @@ class LoadImageFromExcelURL:
                 "end_row_number": ("INT", {"default": -1, "min": -1, "max": 100000, "step": 1, "description": "-1 表示读到最后一行"}),
                 "output_format": (["png", "webp", "jpg"], {"default": "png"}),
                 "timeout": ("INT", {"default": 30, "min": 5, "max": 300, "step": 5}),
+                "on_error": (["raise", "black", "white"], {"default": "black"}),
+                "fallback_size": ("INT", {"default": 512, "min": 16, "max": 8192, "step": 16}),
             },
             "optional": {
                 "sheet_name": ("STRING", {"multiline": False, "default": "0"}),
@@ -118,7 +120,13 @@ class LoadImageFromExcelURL:
     CATEGORY = "ExcelUtils"
 
     def execute(self, excel_file_path, url_column, start_row_number, end_row_number,
-                output_format, timeout, sheet_name="0"):
+                output_format, timeout, on_error="black", fallback_size=512, sheet_name="0"):
+        def _make_fallback(url_for_name="", row_for_name=0):
+            color = 255 if on_error == "white" else 0
+            img = Image.new("RGB", (fallback_size, fallback_size), (color, color, color))
+            it, mt = _pil_to_tensor(img, output_format)
+            name = _name_from_url(url_for_name, output_format) if url_for_name else f"fallback_row{row_for_name}.{output_format}"
+            return it, mt, name
         if pd is None:
             raise RuntimeError("错误：运行此节点需要 Pandas 库，请先安装 pandas openpyxl。")
 
@@ -180,15 +188,28 @@ class LoadImageFromExcelURL:
 
         except WorkflowStopRequested:
             raise
-        except requests.exceptions.Timeout:
-            raise RuntimeError(f"请求超时: URL 在 {timeout} 秒内未响应")
-        except requests.exceptions.RequestException as e:
-            raise RuntimeError(f"网络请求失败: {e}")
-        except Image.UnidentifiedImageError:
-            raise RuntimeError("无法识别的图片格式，URL可能不是有效的图片")
         except Exception as e:
             traceback.print_exc()
-            raise RuntimeError(f"加载失败: {e}")
+            if on_error == "raise":
+                raise RuntimeError(f"加载失败: {e}")
+
+            row_for_fallback = locals().get("current_row", int(start_row_number))
+            url_for_fallback = locals().get("url", "")
+            print(f"[QC.LoadImageFromExcelURL] 行 {row_for_fallback} 加载失败，返回 {on_error} 占位图: {e}")
+            it, mt, name = _make_fallback(url_for_fallback, row_for_fallback)
+
+            try:
+                actual_end = int(end_row_number) if end_row_number != -1 else row_for_fallback
+                next_start = row_for_fallback + 1
+                if end_row_number != -1 and next_start > actual_end:
+                    next_start = actual_end + 1
+            except Exception:
+                next_start = row_for_fallback + 1
+
+            return {
+                "ui": {"start_row_number": [next_start]},
+                "result": (it, mt, name, url_for_fallback),
+            }
 
 
 class LoadImageFromURL:
